@@ -23,9 +23,38 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.BsonDocument;
+import org.bson.Document;
 
 public class App {
-    public static void main(String[] args) {
-
-    }
+    public static void main(String[] args) 
+    {
+    	/**
+    	 * Used to set certain mongo client options, refer documentation
+    	 * for details
+    	 */
+    	MongoClientOptions mco = MongoClientOptions.builder().build();
+    	//MongoClient is a heavy weight object, do not create more than
+    	//necessary
+    	MongoClient client = new MongoClient();
+    	/*
+    	 * MongoDatabase is a light weight object, only contains
+    	 * configurations and a few db properties
+    	 * 
+    	 * MongoDatabase is an immutable object
+    	 * With methods can be used to configure, make sure
+    	 * that after calling a with we save back to the database
+    	 * instance
+    	 */
+    	MongoDatabase db=client.getDatabase("test");
+    	/**
+    	 * MongoCollection is the gatway to all CRUD operations.
+    	 * 
+    	 * Mongo collection is an immutable object, it is actually a
+    	 * generic interface.
+    	 * 
+    	 * MongoCollection is a collection of Documents,we can have the
+    	 * generic type as Document or BsonDocument.
+    	 */
+    	MongoCollection<Document> collection = db.getCollection("test");
+    	}
 }
